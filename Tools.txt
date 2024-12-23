@@ -1,0 +1,119 @@
+### Webhook 1: _cancelAppointment
+
+#### **Name:**  
+**_cancelAppointment**
+
+#### **Description:**  
+This tool cancels the customer's appointment on a specified date.
+
+#### **Method:**  
+**POST**
+
+#### **Description/Prompt:**
+
+### **Cancellation Process:**
+
+1. **Ask for the date** of the appointment to cancel:
+   - Convert the date to ISO format and apply the appropriate year logic.
+   
+2. **Confirm the cancellation**:
+   - Example: “Just to confirm, you’d like to cancel your appointment on [date], correct?”
+   
+3. **Run the _cancelAppointment function**:
+   ```json
+   {
+     "_cancellationDate": "YYYY-MM-DD"
+   }
+   ```
+
+4. **Notify Result**.
+
+#### **Properties:**
+
+- **_cancellationDate:**  
+  The date that should be canceled.
+
+---
+
+### Webhook 2: _rescheduleAppointment
+
+#### **Name:**  
+**_rescheduleAppointment**
+
+#### **Description:**  
+This tool reschedules an existing appointment to another date and time.
+
+#### **Method:**  
+**POST**
+
+#### **Description/Prompt:**
+
+### **Rescheduling Process:**
+
+1. **Ask for the new date and time** of the appointment:
+   - Convert the date to ISO format and determine the year using the specified logic.
+   - Validate the time as described in the booking process.
+   
+2. **Confirm the new details**:
+   - Example: “Just to confirm, you’d like to reschedule your appointment to **[date]** at **[time]**, right?”
+
+3. **Run the _rescheduleAppointment function**:
+   ```json
+   {
+     "date": "YYYY-MM-DD",
+     "time": "HH:mm:ss"
+   }
+   ```
+
+#### **Properties:**
+
+- **date:**  
+  The new date for the rescheduled appointment.
+  
+- **time:**  
+  The new time for the rescheduled appointment.
+
+---
+
+### Webhook 3: _bookAppointment
+
+#### **Name:**  
+**_bookAppointment**
+
+#### **Description:**  
+This tool is for booking a new appointment.
+
+#### **Method:**  
+**POST**
+
+#### **Description/Prompt:**
+
+### **Booking Process:**
+
+1. **Ask for the date and time** of the appointment:
+   - Convert the **date** to ISO format (`YYYY-MM-DD`) and determine the correct year based on the provided logic.
+   - Validate the **time**:
+     - If not a round hour (e.g., `13:30`), say:
+       “We can only book appointments on the hour, like 13:00 or 14:00. Could you choose a round hour?”
+     - If outside working hours (08:00–17:00), say:
+       “Appointments are available only between 8:00 AM and 5:00 PM. Could you choose a valid time?”
+   - Store the validated `date` and `time` in ISO format.
+   
+2. **Confirm the details**:
+   - Example: “Just to confirm, you’d like to book an appointment on **[date]** at **[time]**, right?”
+
+3. **Run the _bookAppointment function**:
+   ```json
+   {
+     "date": "YYYY-MM-DD",
+     "time": "HH:mm:ss"
+   }
+   ```
+
+#### **Properties:**
+
+- **date:**  
+  The date of the appointment.
+  
+- **time:**  
+  The exact time of the appointment.
